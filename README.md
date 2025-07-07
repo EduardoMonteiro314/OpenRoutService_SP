@@ -1,6 +1,16 @@
 # Configuração do OpenRouteService (ORS) para Mapa Local
 
-Este documento detalha o processo de configuração de uma instância local do OpenRouteService (ORS) utilizando Docker. O objetivo é executar o serviço com um ficheiro de mapa `.osm.pbf` personalizado (neste caso, uma área de São Paulo) e com o perfil de rota para carros (`driving-car`) ativado, sem dados de elevação.
+Olá! Criei este repositório principalmente como um "diário de bordo" e um guia de referência para os meus projetos futuros.
+
+O processo de configurar o OpenRouteService (ORS) com um mapa personalizado teve várias etapas e alguns desafios inesperados. Decidi documentar tudo aqui para ajudar qualquer outra pessoa que possa passar pelo mesmo, e também para facilitar os meus próprios projetos futuros.
+
+Espero que seja útil!
+
+### Contexto do Projeto
+
+**Nota Importante:** Os ficheiros de configuração e o mapa de exemplo (`seu_mapa.osm.pbf`) neste repositório foram utilizados para um teste com uma **área específica e limitada da cidade de São Paulo**. Se você utilizar um mapa maior (como um estado ou país), lembre-se de ajustar a alocação de memória (`XMX`) no ficheiro `docker-compose.yml` para um valor consideravelmente maior para evitar erros.
+
+---
 
 ## Pré-requisitos
 
@@ -36,9 +46,9 @@ services:
     ports:
       - "8080:8082"
     volumes:
-      # Mapeia a pasta do mapa para o caminho esperado pelo contentor
+      # Mapeia a pasta do mapa para o novo caminho de "files"
       - ./ors-data:/home/ors/files:z
-      # Mapeia o ficheiro de configuração para o caminho esperado pelo contentor
+      # Mapeia o ficheiro de configuração para o novo caminho de "config"
       - ./ors-config.yml:/home/ors/config/ors-config.yml:z
       # Mapeia os dados persistentes (grafos, cache, logs)
       - ./graphs:/home/ors/graphs:z
