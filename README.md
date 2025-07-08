@@ -47,18 +47,18 @@ services:
       - "8080:8082"
     volumes:
       # Mapeia a pasta do mapa para o novo caminho de "files"
-      - ./ors-data:/home/ors/files:z
+      - ./ors-data:/ors-core/data/pbf:z
       # Mapeia o ficheiro de configuração para o novo caminho de "config"
       - ./ors-config.yml:/home/ors/config/ors-config.yml:z
       # Mapeia os dados persistentes (grafos, cache, logs)
       - ./graphs:/home/ors/graphs:z
       - ./elevation_cache:/home/ors/elevation_cache:z
-      - ./logs:/var/log/ors:z
+      - ./logs/ors:/var/log/ors:z
     environment:
       # MUITO IMPORTANTE: "True" na 1ª vez, "False" nas seguintes
       REBUILD_GRAPHS: "True"
       # Alocação de memória. Ajustar conforme o tamanho do mapa.
-      XMS: "1g" 
+      XMS: "1g"
       XMX: "1g"
 ```
 
@@ -70,7 +70,7 @@ Este ficheiro diz ao ORS qual mapa usar e quais perfis de rota ativar.
 ors:
   engine:
     # Aponta para o ficheiro de mapa DENTRO do contentor
-    source_file: /home/ors/files/seu_mapa.osm.pbf
+    source_file: /ors-core/data/pbf/sudeste-latest.osm.pbf 
     profiles:
       car:
         enabled: true
@@ -78,7 +78,7 @@ ors:
         # Desativado para evitar problemas de download de dados de elevação
         elevation: false
 ```
-**Nota:** Lembre-se de substituir `seu_mapa.osm.pbf` pelo nome exato do seu ficheiro de mapa.
+**Nota:** Lembre-se de substituir `sudeste-latest.osm.pbf` pelo nome exato do seu ficheiro de mapa.
 
 ## Guia de Execução
 
@@ -123,7 +123,7 @@ Após o serviço iniciar, pode usar as seguintes URLs no seu navegador para test
 
 ## Guia de Troubleshooting (Resumo da Jornada)
 
-Durante esta configuração, encontrámos vários problemas. Aqui estão eles e as suas soluções, para referência futura:
+Durante esta configuração, encontrei vários problemas. Aqui estão eles e as suas soluções, para referência futura:
 
 1.  **Erro: `permission denied ... docker.sock`**
     * **Causa:** O utilizador não tem permissão para comunicar com o serviço Docker.
