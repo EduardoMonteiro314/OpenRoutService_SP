@@ -1,0 +1,8 @@
+ors:
+  engine:
+    source_file: /ors-core/data/pbf/sudeste-latest.osm.pbf
+    profiles:
+      car:
+        enabled: true
+        profile: driving-car
+        elevation: false
